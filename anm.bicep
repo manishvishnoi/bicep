@@ -19,7 +19,7 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
         {
           server: '${acrName}.azurecr.io'
           username: acrName
-          passwordSecretRef: 'acr-password'
+          passwordSecretRef: 'acrPassword'
         }
       ]
       ingress: {
@@ -28,8 +28,8 @@ resource containerApp 'Microsoft.App/containerApps@2023-05-01' = {
       }
       secrets: [
         {
-          name: 'acr-password'
-          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=acr-password)'
+          name: 'acrPassword'
+          value: '@Microsoft.KeyVault(VaultName=${keyVaultName};SecretName=acrPassword)'
         }
       ]
     }
