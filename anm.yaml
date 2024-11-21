@@ -1,0 +1,31 @@
+trigger:
+  branches:
+    include:
+      - main
+pool:
+  name: 'Default'
+
+jobs:
+- job: DeployNM
+  displayName: 'Deploy Axway anm using Bicep'
+  steps:
+
+    - task: AzureCLI@2
+      displayName: 'Deploy anm with Bicep'
+      inputs:
+        azureSubscription: 'axwaymanishdepops1'
+        scriptType: 'ps'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+          # Define parameters
+          $resourceGroupName = 'RG-mavishnoi'
+          $location = 'westeurope'
+          
+          # Create the resource group if it doesn't exist
+          az group create --name $resourceGroupName --location $location
+          
+          # Deploy the ACR using Bicep
+          az deployment group create `
+            --resource-group $resourceGroupName `
+            --template-file './anm.bicep' `
+            --parameters acrName='axwaymanishdevops' containerAppName='my-anm-bicep' imageName='anm' managedEnvironmentName=managedEnvironment-RGmavishnoi-91ac-21march targetPort=8090 keyVaultName='secretbicep' targetPort='8090'
