@@ -24,7 +24,7 @@ jobs:
           # Create the resource group if it doesn't exist
           az group create --name $resourceGroupName --location $location
           
-          # Deploy the ACR using Bicep
+          # Deploy the ACR using Bicep Test1
           az deployment group create `
             --resource-group $resourceGroupName `
             --template-file './anm.bicep' `
